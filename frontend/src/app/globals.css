@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@layer components{
+  .inp-type1{
+    @apply w-[100%] border-2 border-black rounded-md p-2 text-xs text-black
+  }
+}
