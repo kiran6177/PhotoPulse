@@ -1,7 +1,7 @@
 import { unbounded } from "@/fonts";
 import "./globals.css";
 import Header from "@/Components/common/Header";
-
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata = {
   title: "PhotoPulse",
@@ -14,8 +14,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${unbounded.className} antialiased bg-gradient-to-br from-black via-[#08050c] to-[#2e024b] min-h-screen`}
       >
-        <Header/>
-        {children}
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

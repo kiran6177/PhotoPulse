@@ -3,15 +3,28 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import FullButton from "../common/FullButton";
+import useFetch from "@/hooks/fetch";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCpassword] = useState("");
+  const {data,error,loading,fetchData} = useFetch();
+  const router = useRouter();
+
+  useEffect(()=>{
+    if(data?.success){
+      router.replace("/login")
+      return
+    }
+  },[data])
 
   const handleSignupSubmit = (e) => {
     e.preventDefault();
+    fetchData("/signup/api",JSON.stringify({name,email,mobile,password,cPassword}),"POST")
   };
 
   return (
@@ -44,6 +57,16 @@ export default function SignupForm() {
             />
           </div>
           <div className="flex flex-col  gap-1">
+            <label className="text-xs" htmlFor="#mobile">Mobile</label>
+            <input
+              type="number"
+              id="mobile"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              className="inp-type1"
+            />
+          </div>
+          <div className="flex flex-col  gap-1">
             <label className="text-xs" htmlFor="#password">Password</label>
             <input
               type="password"
@@ -63,9 +86,9 @@ export default function SignupForm() {
               className="inp-type1"
             />
           </div>
-          {/* <div className="">
+          <div className="">
           {error && <p className="text-xs text-red-700">{error}</p>}
-          </div> */}
+          </div>
           <FullButton title={"SIGNUP"} type={"submit"} />
           <p className="text-[10px] mx-auto">
             Already Have An Account ?

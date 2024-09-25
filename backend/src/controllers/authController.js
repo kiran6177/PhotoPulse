@@ -1,4 +1,4 @@
-import { emailRegex, passwordRegex } from "../common/constants.js";
+import { emailRegex, mobileRegex, passwordRegex } from "../common/constants.js";
 import { CustomError } from "../common/CustomError.js";
 import { compare, hash } from "bcrypt";
 import UserModel from "../models/userModel.js";
@@ -52,6 +52,7 @@ export const login = async (req, res, next) => {
       _id: findUser._id,
       name: findUser.name,
       email: findUser.email,
+      mobile: findUser.mobile,
       designation: findUser.designation,
     };
 
@@ -78,10 +79,11 @@ export const login = async (req, res, next) => {
 
 export const signup = async (req, res, next) => {
   try {
-    const { name, email, password, cPassword } = req.body;
+    const { name, email, mobile, password, cPassword } = req.body;
     if (
       name?.trim() === "" &&
       email?.trim() === "" &&
+      mobile?.trim() === "" &&
       password?.trim() === "" &&
       cPassword?.trim() === ""
     ) {
@@ -94,6 +96,18 @@ export const signup = async (req, res, next) => {
 
     if (!emailRegex.test(email)) {
       throw CustomError.createError("Please enter a valid email!!", 400);
+    }
+
+    if (mobile?.trim() === "") {
+      throw CustomError.createError("Please enter a mobile number!!", 400);
+    }
+
+    if (mobile?.length !== 10) {
+      throw CustomError.createError("Please enter a 10 digit mobile number!!", 400);
+    }
+
+    if (!mobileRegex.test(mobile)) {
+      throw CustomError.createError("Please enter a valid mobile number!!", 400);
     }
 
     if (password?.trim() === "") {
@@ -127,11 +141,12 @@ export const signup = async (req, res, next) => {
     if (userExist) {
       throw CustomError.createError("Account Exists!!", 400);
     }
-    console.log(name, email, password, cPassword);
+    console.log(name, email,mobile, password, cPassword);
     const hashed = await hash(password, SALT_ROUNDS);
     const userData = {
       name,
       email,
+      mobile:parseInt(mobile),
       password: hashed,
     };
 
@@ -164,12 +179,9 @@ export const logout = async (req, res, next) => {
 
 export const editProfile = async (req, res, next) => {
   try {
-    const { name, email } = req.body;
+    const { name, email ,mobile} = req.body;
     const { _id } = req.user;
-    if (
-      name?.trim() === "" &&
-      email?.trim() === "" 
-    ) {
+    if (name?.trim() === "" && email?.trim() === "") {
       throw CustomError.createError("Please fill up the fields!!", 400);
     }
 
@@ -181,16 +193,29 @@ export const editProfile = async (req, res, next) => {
       throw CustomError.createError("Please enter a valid email!!", 400);
     }
 
+    if (mobile?.trim() === "") {
+      throw CustomError.createError("Please enter a mobile number!!", 400);
+    }
+
+    if (mobile?.length !== 10) {
+      throw CustomError.createError("Please enter a 10 digit mobile number!!", 400);
+    }
+
+    if (!mobileRegex.test(mobile)) {
+      throw CustomError.createError("Please enter a valid mobile number!!", 400);
+    }
+
     const userExist = await UserModel.findOne({ _id });
 
     if (!userExist) {
       throw CustomError.createError("Invalid Request!!", 400);
     }
-    console.log(name, email, designation);
+    console.log(name, email, mobile);
 
     const userData = {
       name,
       email,
+      mobile
     };
 
     const updatedUser = await UserModel.findByIdAndUpdate(
@@ -237,18 +262,15 @@ export const changePassword = async (req, res, next) => {
     if (!userExist) {
       throw CustomError.createError("Invalid User!!", 400);
     }
-    const isValidPass = await compare(oPassword,userExist.password);
-    if(!isValidPass){
+    const isValidPass = await compare(oPassword, userExist.password);
+    if (!isValidPass) {
       throw CustomError.createError("Invalid Old Password!!", 400);
     }
     const hashed = await hash(newPass, SALT_ROUNDS);
     const userData = {
       password: hashed,
     };
-    await UserModel.findByIdAndUpdate(
-      { _id },
-      { $set: userData }
-    );
+    await UserModel.findByIdAndUpdate({ _id }, { $set: userData });
     res.json({ success: true });
   } catch (error) {
     next(error);
