@@ -1,23 +1,42 @@
 "use client"
 
-import {  useState } from "react"
+import {  useEffect, useState } from "react"
 import Link from "next/link";
 import FullButton from "../common/FullButton";
 import useFetch from "@/hooks/fetch";
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+import Loading from "../common/Loading";
 
 export default function LoginForm() {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
-    const {data,error,loading,fetchData} = useFetch();
+    const {data,error,fetchData} = useFetch();
+    const {user,loading,setUser} = useAuth();
+    const router = useRouter();
+
+    useEffect(()=>{
+      if(user && !loading){
+        router.push("/")
+        return        
+      }
+      if(data?.user){
+        setUser(data?.user)
+        router.push("/")
+        return
+      }
+    },[data,user,loading])
 
     const handleLoginSubmit = (e)=>{
         e.preventDefault();
         fetchData("/login/api",JSON.stringify({email,password}),"POST")
     }
    
-
-  return (
-    <div className="w-screen flex justify-center ">
+    if(loading){
+      return <Loading/>
+    }else{
+      return (
+        <div className="w-screen flex justify-center ">
       <div className="w-[90%] sm:w-[75%] md:w-[65%] lg:w-[45%] xl:w-[35%] bg-gradient-to-br from-[#c14ac3] via-[#5010a2] to-[#2003b0] p-[1.5px] rounded-md">
         <form onSubmit={handleLoginSubmit} className=" rounded-md  p-10 w-full flex flex-col gap-5 bg-[rgb(16,6,24)] text-white">
           <div className="flex flex-col  gap-1">
@@ -38,6 +57,7 @@ export default function LoginForm() {
         </form>
       </div>
     </div>
-  )
+    )
+  }
 }
 

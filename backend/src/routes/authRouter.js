@@ -11,7 +11,7 @@ authRouter.route("/signup")
 .post(signup)
 
 authRouter.route("/logout")
-.get(logout)
+.get(isUserLogin,logout)
 
 authRouter.route("/profile")
 .put(isUserLogin,editProfile)
