@@ -6,6 +6,7 @@ import useFetch from "@/hooks/fetch";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import { redirect } from "next/navigation";
+import GalleryHome from "../gallery/GalleryHome";
 
 function ProfileComponent() {
     const [view,setView] = useState("PROFILE");
@@ -37,9 +38,9 @@ function ProfileComponent() {
         <FullButton title={"LOGOUT"} type={"button"} styles={"text-white"} clickHandler={handleLogout} />
       </div>
       </div>
-      <div className="w-full flex items-center min-h-[70vh]">
+      <div className="w-full flex items-start pt-[2rem] min-h-[70vh]">
         {
-            view === "PROFILE" && <EditProfile/> 
+            view === "PROFILE" ? <EditProfile/> : <GalleryHome/>
         }
       </div>
     </>

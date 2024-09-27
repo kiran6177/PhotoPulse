@@ -1,4 +1,10 @@
-import { Montserrat, Inter, Poppins, Playpen_Sans, Unbounded } from "next/font/google";
+import {
+  Montserrat,
+  Inter,
+  Poppins,
+  Unbounded,
+  Mate_SC,
+} from "next/font/google";
 
 export const montserrat = Montserrat({
   subsets: ["latin"],
@@ -18,4 +24,9 @@ export const poppins = Poppins({
 export const unbounded = Unbounded({
   subsets: ["latin"],
   weight: ["400", "500", "700"], // Specify the weights you need
+});
+
+export const mate = Mate_SC({
+  subsets: ["latin"],
+  weight: ["400"], // Specify the weights you need
 });
