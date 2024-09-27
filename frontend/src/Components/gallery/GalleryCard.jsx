@@ -1,16 +1,22 @@
+"use client"
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-function GalleryCard() {
+function GalleryCard({album}) {
+  const router = useRouter();
   return (
-    <div className="bg-white p-3 rounded-sm flex flex-col gap-3">
+    <div onClick={()=>router.push(`/myalbum/${album?._id}`)} className="bg-white p-3 rounded-sm flex flex-col gap-3 cursor-pointer">
       <div
         className={`relative w-full min-h-[200px] overflow-hidden rounded-md`}
       >
-        <Image src={"/1.jpg"} fill sizes="inherit" className="object-cover " />
+        {
+          album?.images?.length > 0 &&
+        <Image src={album?.images[0].url} fill sizes="inherit" className="object-cover " alt={album?.images[0].title} />
+         }
       </div>
       <div>
-        <h1>TITLE</h1>
+        <h1>{album?.title}</h1>
       </div>
     </div>
   );

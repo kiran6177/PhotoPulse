@@ -1,4 +1,4 @@
-import AddImage from "@/Components/gallery/AddImage";
+import MyAlbumDetail from "@/Components/album/MyAlbumDetail";
 import { GALLERY_BASE_URL } from "@/config";
 import { cookies } from "next/headers";
 
@@ -14,15 +14,13 @@ export async function getGalleryData(){
     return data.category
 }
 
-export default async function Page() {
-    const data = await getGalleryData();
 
-    return (
-        <div className="w-full pt-[7rem] px-8">
-            <h3 className="text-white">ADD IMAGES</h3>
-            <div>
-                <AddImage category={data} />
-            </div>
-        </div>
-    );
+export default async function Page({ params }) {
+  const { id } = params;
+  const data = await getGalleryData();
+  return (
+    <div className="w-full pt-[6rem] px-8">
+        <MyAlbumDetail id={id} existCategory={data} />
+    </div>
+  );
 }

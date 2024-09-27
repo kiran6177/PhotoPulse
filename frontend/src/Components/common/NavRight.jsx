@@ -14,9 +14,9 @@ function NavRight() {
     <div className='flex gap-5'>
         {
             user ?
-            <div onClick={()=>router.push("/profile")} className='bg-gradient-to-br flex items-center gap-3 px-4 from-[#c14ac3] via-[#5010a2] to-[#2003b0] rounded-full py-2 cursor-pointer'>
+            <div onClick={()=>router.push("/profile")} className='bg-gradient-to-br flex items-center gap-3 px-4 from-[#c14ac3] via-[#5010a2] to-[#2003b0] rounded-full py-1 sm:py-2 cursor-pointer'>
                 <PiUserListFill  className='w-[1.5rem] h-[1.5rem] invert ' />
-                <p className='text-xs text-white'>{user?.name}</p>
+                <p className='text-[10px]  sm:text-xs text-white'>{user?.name}</p>
             </div>
             :
             <>
