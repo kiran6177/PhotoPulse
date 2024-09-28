@@ -8,6 +8,46 @@
   box-sizing: border-box;
 }
 
+.scrollgallery{
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+
+  /* Webkit browsers (Chrome, Safari, etc.) */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.infinite-scroll-component {
+  column-count: 1;
+  column-gap: 0.75rem; /* equivalent to gap-3 in Tailwind */
+}
+
+@media (min-width: 420px) {
+  .infinite-scroll-component {
+    column-count: 2;
+  }
+}
+
+@media (min-width: 640px) {
+  .infinite-scroll-component {
+    column-count: 3;
+  }
+}
+
+@media (min-width: 768px) {
+  .infinite-scroll-component {
+    column-count: 4;
+  }
+}
+
+@media (min-width: 1024px) {
+  .infinite-scroll-component {
+    column-count: 5;
+  }
+}
+
+
 @layer components{
   .inp-type1{
     @apply w-[100%] border-2 border-black rounded-md p-2 text-xs text-black
