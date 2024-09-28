@@ -78,7 +78,7 @@ function AddImage({category}) {
       <div className="w-full bg-gradient-to-br from-[#c14ac3] via-[#5010a2] to-[#2003b0] rounded-md p-[1.5px]">
         <form
           onSubmit={handleImageUpload}
-          className=" rounded-md text-white p-10 w-full flex flex-col gap-5 bg-[rgb(16,6,24)]"
+          className=" rounded-md text-white p-7 sm:p-10 w-full flex flex-col gap-5 bg-[rgb(16,6,24)]"
         >
           <div className="flex flex-col  gap-1">
             <label className="text-sm" htmlFor="#title">
@@ -98,10 +98,10 @@ function AddImage({category}) {
             </label>
             <div className="my-3  rounded-md p-[2px] bg-gradient-to-br from-[#c14ac3] via-[#5010a2] to-[#2003b0] ">
               <div className="bg-[#171717] py-10">
-              <p className="flex items-center gap-4 rounded-md  justify-center  text-[#c1c1c1] hover:text-white hover:scale-[1.005] cursor-pointer tracking-widest transition-all duration-150 ease-linear" 
+              <p className="flex items-center gap-4 rounded-md text-xs  sm:text-sm md:text-base  justify-center  text-[#c1c1c1] hover:text-white hover:scale-[1.005] cursor-pointer tracking-widest transition-all duration-150 ease-linear" 
                   onClick={()=> imageInputRef.current.click()}
               ><GoPlusCircle
-                  className="w-[2rem] h-[2rem] cursor-pointer"
+                  className="w-[1.25rem] md:w-[2rem] h-[1.25rem] md:h-[2rem] cursor-pointer"
                 />Click to Add Images</p>
               </div>
             </div>
@@ -118,7 +118,7 @@ function AddImage({category}) {
           <ImageManipulation images={images} setImages={setImages} />
           <div>
             <p className="text-sm">Select Category</p>
-            <div className="flex gap-5 my-5 items-center">
+            <div className="flex flex-wrap gap-5 my-5 items-center">
               {existCategory?.map((cat, index) => {
                 return (
                   <div
@@ -135,8 +135,8 @@ function AddImage({category}) {
                     <p
                       className={
                         selectedCategory === cat?.name
-                          ? "rounded-full px-5 py-2"
-                          : "bg-[#17131c] rounded-full px-5 py-2"
+                          ? "rounded-full px-5 py-2 text-xs md:text-base"
+                          : "bg-[#17131c] rounded-full px-5 py-2 text-xs md:text-base"
                       }
                     >
                       {cat?.name}
