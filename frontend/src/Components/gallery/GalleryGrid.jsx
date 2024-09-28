@@ -1,10 +1,8 @@
 "use client";
-import useWindowSize from "@/hooks/window";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 function GalleryGrid() {
-  const { width } = useWindowSize();
   const [height, setHeight] = useState(400);
   const [widthCount, setWidthCount] = useState(0);
   const [imagesArr, setImagesArr] = useState([]);
@@ -21,7 +19,6 @@ function GalleryGrid() {
     "/10.jpg",
   ];
 
-  useEffect(() => {}, [width, images]);
 
   return (
     <div  className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-3" >

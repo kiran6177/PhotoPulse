@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 export async function getGalleryData(){
     const res = await fetch(GALLERY_BASE_URL+"/add",{
         headers : {
+            authorization : `Bearer ${cookies().get('token') || null}`,
             Cookie :cookies().toString()
         }
     })

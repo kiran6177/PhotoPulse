@@ -102,18 +102,17 @@ export const getMyGalleryImages = async (req, res, next) => {
 
 export const editAlbum = async (req, res, next) => {
   try {
-    const { title, category , deleted} = req.body;
+    const { title, category, deleted } = req.body;
     const { id } = req.params;
     const delArray = JSON.parse(deleted);
-    console.log("DEL",delArray);
-    
+    console.log("DEL", delArray);
+
     if (title.trim() === "") {
       throw CustomError.createError("Please Fill Title", 400);
     }
     if (category && !category.trim()) {
       throw CustomError.createError("Please Fill Category", 400);
     }
-
 
     const existingCategories = await CategoryModel.find({
       name: { $regex: new RegExp(category, "i") },
@@ -123,7 +122,7 @@ export const editAlbum = async (req, res, next) => {
       title: { $regex: new RegExp(title, "i") },
     });
 
-    const thisData = await GalleryModel.findById({_id:id})
+    const thisData = await GalleryModel.findById({ _id: id });
 
     if (existingData?.length > 0 && existingData[0]?._id?.toString() !== id) {
       throw CustomError.createError("Title already exists!!", 400);
@@ -134,7 +133,7 @@ export const editAlbum = async (req, res, next) => {
       categoryId = existingCategories[0]?._id;
     } else {
       console.log("CREATE");
-      const addedCategory = await CategoryModel.create({name:category});
+      const addedCategory = await CategoryModel.create({ name: category });
       categoryId = addedCategory?._id;
     }
 
@@ -162,51 +161,49 @@ export const editAlbum = async (req, res, next) => {
       const base64EncodedImage = Buffer.from(file.buffer).toString("base64");
       const dataUri = `data:${file.mimetype};base64,${base64EncodedImage}`;
       const result = await cloudinary.uploader.upload(dataUri, {
-          folder: GALLERY_FOLDER_NAME,
+        folder: GALLERY_FOLDER_NAME,
       });
       imagesData[parseInt(index)].url = result.secure_url;
     }
 
-    for(let toDelete of delArray){
-        let url;
-        for(let each of thisData?.images){
-            if(toDelete === each?._id?.toString()){
-                url = each?.url;
-                break;
-            }
+    for (let toDelete of delArray) {
+      let url;
+      for (let each of thisData?.images) {
+        if (toDelete === each?._id?.toString()) {
+          url = each?.url;
+          break;
         }
-        console.log("URL",url);
-        const publicId = url?.split("/")
-          .reverse()[0]
-          .split(".")[0];
-        console.log("PUBLIC",publicId);
-        await cloudinary.uploader.destroy(
-          GALLERY_FOLDER_NAME + "/" + publicId,
-          (error, result) => {
-            if (error) {
-              console.error("Error deleting asset from Cloudinary:", error); // Log any errors
-            } else {
-              console.log("Successfully deleted asset:", result); // Log successful deletion
-            }
+      }
+      console.log("URL", url);
+      const publicId = url?.split("/").reverse()[0].split(".")[0];
+      console.log("PUBLIC", publicId);
+      await cloudinary.uploader.destroy(
+        GALLERY_FOLDER_NAME + "/" + publicId,
+        (error, result) => {
+          if (error) {
+            console.error("Error deleting asset from Cloudinary:", error); // Log any errors
+          } else {
+            console.log("Successfully deleted asset:", result); // Log successful deletion
           }
-        );
+        }
+      );
     }
 
     let imagesArray = [];
-    for(let i = 0 ; i < imagesData.length ; i++){
-        if(imagesData[i]?._id){
-            for(let each of thisData?.images){
-                if(imagesData[i]?._id?.toString() === each?._id?.toString()){
-                    imagesArray[i] = each;
-                    break;
-                }
-            }
-        }else{
-            imagesArray[i] = {
-                title : imagesData[i]?.title,
-                url : imagesData[i]?.url,
-            }
+    for (let i = 0; i < imagesData.length; i++) {
+      if (imagesData[i]?._id) {
+        for (let each of thisData?.images) {
+          if (imagesData[i]?._id?.toString() === each?._id?.toString()) {
+            imagesArray[i] = each;
+            break;
+          }
         }
+      } else {
+        imagesArray[i] = {
+          title: imagesData[i]?.title,
+          url: imagesData[i]?.url,
+        };
+      }
     }
 
     const dataToInsert = {
@@ -216,19 +213,59 @@ export const editAlbum = async (req, res, next) => {
     };
     console.log("DATA", dataToInsert);
 
-    const addAlbumToDb = await GalleryModel.findByIdAndUpdate({_id:id},{$set:dataToInsert},{new:true});
+    const addAlbumToDb = await GalleryModel.findByIdAndUpdate(
+      { _id: id },
+      { $set: dataToInsert },
+      { new: true }
+    );
     console.log(addAlbumToDb);
-    const albumObj = addAlbumToDb.toObject()
+    const albumObj = addAlbumToDb.toObject();
     const albumData = {
-        ...albumObj,
-        category:{
-            _id:albumObj.category,
-            name: existingCategories?.length > 0 ? existingCategories[0]?.name : category
-        }
-    }
+      ...albumObj,
+      category: {
+        _id: albumObj.category,
+        name:
+          existingCategories?.length > 0
+            ? existingCategories[0]?.name
+            : category,
+      },
+    };
 
     res.json({ success: albumData });
   } catch (error) {
     next(error);
   }
 };
+
+export const deleteAlbum = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    console.log("DELETE", id);
+    const existingAlbum = await GalleryModel.findById({ _id: id });
+    if (!existingAlbum) {
+      throw CustomError.createError("Invalid Album ID!!", 400);
+    }
+    for (let file of existingAlbum?.images) {
+      console.log("URL", file.url);
+      const publicId = file?.url?.split("/").reverse()[0].split(".")[0];
+      console.log("PUBLIC", publicId);
+      await cloudinary.uploader.destroy(
+        GALLERY_FOLDER_NAME + "/" + publicId,
+        (error, result) => {
+          if (error) {
+            console.error("Error deleting asset from Cloudinary:", error); // Log any errors
+          } else {
+            console.log("Successfully deleted asset:", result); // Log successful deletion
+          }
+        }
+      );
+    }
+    await GalleryModel.findByIdAndDelete({ _id: id });
+
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllCategoryWithData = async (req, res, next) => {};

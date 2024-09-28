@@ -1,6 +1,6 @@
 import express from "express";
 import { isUserLogin } from "../middleware/authHandler.js";
-import { addAlbum, editAlbum, getGalleryData, getMyGalleryImages } from "../controllers/galleryController.js";
+import { addAlbum, deleteAlbum, editAlbum, getAllCategoryWithData, getGalleryData, getMyGalleryImages } from "../controllers/galleryController.js";
 import upload from "../utils/multer.js";
 
 const galleryRouter = express.Router();
@@ -14,6 +14,9 @@ galleryRouter.route("/add")
 
 galleryRouter.route("/add/:id")
 .put(isUserLogin,upload.any(),editAlbum)
+.delete(isUserLogin,deleteAlbum)
 
+galleryRouter.route("/home/category")
+.get(isUserLogin,getAllCategoryWithData)
 
 export default galleryRouter;
