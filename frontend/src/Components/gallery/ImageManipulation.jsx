@@ -15,8 +15,6 @@ function ImageManipulation({ images, setImages , setDeleted}) {
   const handleRemoveImage = (e, index) => {
     const updated = [...images];
     if(setDeleted){
-      // console.log(updated,index,updated[parseInt(index)]?._id);
-      
       setDeleted(prev=>{
         return [...prev,updated[parseInt(index)]?._id]
       })
@@ -26,14 +24,12 @@ function ImageManipulation({ images, setImages , setDeleted}) {
   };
 
   const handleSwapOrder = (event) => {
-    console.log(event);
     setActive(null);
     const { active, over } = event;
     if (!over) return;
 
     if (active.id !== over.id) {
       const newOrder = [...images];
-      console.log(newOrder);
       [newOrder[active.id - 1], newOrder[over.id - 1]] = [
         newOrder[over.id - 1],
         newOrder[active.id - 1],

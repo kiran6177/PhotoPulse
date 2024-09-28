@@ -24,7 +24,6 @@ function GalleryCard({ album }) {
 
   const handleDelete = (e) => {
     e.stopPropagation();
-    console.log(album);
     fetchData(`/myalbum/${album?._id}/api`, {}, "DELETE");
   };
 

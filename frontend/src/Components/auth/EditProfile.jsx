@@ -82,7 +82,8 @@ useEffect(()=>{
           {error && <p className="text-xs text-red-700">{error}</p>}
         </div>
         <FullButton
-          title={loading ? "Loading..." : "UPDATE"}
+          disabled={loading ? true : false}
+          title={loading ? "UPDATING..." : "UPDATE"}
           type={"submit"}
           styles={"tracking-widest"}
         />

@@ -141,7 +141,6 @@ export const signup = async (req, res, next) => {
     if (userExist) {
       throw CustomError.createError("Account Exists!!", 400);
     }
-    console.log(name, email,mobile, password, cPassword);
     const hashed = await hash(password, SALT_ROUNDS);
     const userData = {
       name,
@@ -151,7 +150,6 @@ export const signup = async (req, res, next) => {
     };
 
     const createdUser = await UserModel.create(userData);
-    console.log(createdUser);
     res.json({ success: true });
   } catch (error) {
     next(error);
@@ -210,7 +208,6 @@ export const editProfile = async (req, res, next) => {
     if (!userExist) {
       throw CustomError.createError("Invalid Request!!", 400);
     }
-    console.log(name, email, mobile);
 
     const userData = {
       name,
@@ -223,7 +220,6 @@ export const editProfile = async (req, res, next) => {
       { $set: userData },
       { new: true }
     );
-    console.log(updatedUser);
     const { password, __v, ...rest } = updatedUser.toObject();
     res.json({ success: rest });
   } catch (error) {

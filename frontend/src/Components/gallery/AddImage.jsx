@@ -22,8 +22,6 @@ function AddImage({category}) {
   const {existCategory,setExistCategory,setMyGallery} = useGallery();
 
   useEffect(()=>{    
-    console.log("LOGGING CAT");
-    
     setExistCategory(category)
   },[category])
 
@@ -39,9 +37,6 @@ function AddImage({category}) {
 
   const handleImageUpload = (e) => {
     e.preventDefault();
-    console.log(title);
-    console.log(images);
-    console.log(addCategory, selectedCategory);
     if (title.trim() === "") return toast.error("Enter the title.");
     if (!addCategory.trim() && !selectedCategory.trim())
       return toast.error("Choose the category.");
@@ -52,8 +47,6 @@ function AddImage({category}) {
     formData.append("category", addCategory ? addCategory : selectedCategory);
     let i = 0;
     for (let single of images) {
-      console.log(single);
-
       if (!single?.file || !single?.title?.trim()) {
         return toast.error("Please fill Image Details.");
       }else{
@@ -68,7 +61,6 @@ function AddImage({category}) {
   };
 
   const handleImage = (e) => {
-    console.log(e.target.files);
     const imageData = [];
     for (let file of e.target.files) {
       imageData.push({
@@ -177,7 +169,7 @@ function AddImage({category}) {
           <div className="">
             {error && <p className="text-xs text-red-700">{error}</p>}
           </div>
-          <FullButton title={loading ? "UPLOADING..." :"UPLOAD"} type={"submit"} />
+          <FullButton disabled={loading ? true : false} title={loading ? "UPLOADING..." :"UPLOAD"} type={"submit"} />
         </form>
       </div>
     </div>

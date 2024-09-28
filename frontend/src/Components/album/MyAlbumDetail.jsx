@@ -76,8 +76,6 @@ function MyAlbumDetail({ id, existCategory }) {
 
   const handleEditAlbum = (e) => {
     e.preventDefault();
-    console.log(deleted, selectedCategory, addCategory);
-    console.log(album);
     if (album?.title.trim() === "") return toast.error("Enter the title.");
     if (!selectedCategory.trim() && !addCategory.trim())
       return toast.error("Choose the category.");
@@ -91,8 +89,6 @@ function MyAlbumDetail({ id, existCategory }) {
     }
     let i = 0;
     for (let single of album?.images) {
-      console.log(single);
-
       if (!single?.title?.trim()) {
         return toast.error("Please fill Image Details.");
       } else {
@@ -106,18 +102,13 @@ function MyAlbumDetail({ id, existCategory }) {
       i++;
     }
     formData.append("deleted", JSON.stringify(deleted));
-    for (let pair of formData.entries()) {
-        console.log(`${pair[0]}: ${pair[1]}`);
-      }
     fetchData(`/myalbum/${id}/api`, formData, "PUT");
   };
 
   const handleImage = (e) => {
-    console.log("Add", e.target.files);
     const added = [];
     for (let file of e.target.files) {
       const url = URL.createObjectURL(file);
-      console.log(url);
       added.push({
         title: "",
         url,
@@ -254,7 +245,7 @@ function MyAlbumDetail({ id, existCategory }) {
         </div>
       </div>
       {saveButton && (
-        <FullButton type={"submit"} title={"SAVE"} styles={"text-white"} />
+        <FullButton disabled={loading ? true : false} type={"submit"} title={loading ? "SAVING..." :"SAVE"} styles={"text-white"} />
       )}
     </form>
   );
