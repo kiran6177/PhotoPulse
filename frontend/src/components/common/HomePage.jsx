@@ -10,7 +10,7 @@ function Home() {
     const {data,error,loading,fetchData} = useFetch();
 
     useEffect(()=>{
-        fetchData("/category/api")
+        fetchData("/category")
     },[])
 
     useEffect(()=>{
