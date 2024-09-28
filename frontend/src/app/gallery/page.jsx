@@ -1,4 +1,4 @@
-import AddImage from "@/Components/gallery/AddImage";
+import AddImage from "@/components/gallery/AddImage";
 import { GALLERY_BASE_URL } from "@/config";
 import { cookies } from "next/headers";
 

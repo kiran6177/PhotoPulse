@@ -1,6 +1,6 @@
 import { unbounded } from "@/fonts";
 import "./globals.css";
-import Header from "@/Components/common/Header";
+import Header from "@/components/common/Header";
 import { AuthProvider } from "@/context/AuthContext";
 import { GalleryProvider } from "@/context/GalleryContext";
 

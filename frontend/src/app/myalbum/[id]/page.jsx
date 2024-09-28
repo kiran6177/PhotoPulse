@@ -1,4 +1,4 @@
-import MyAlbumDetail from "@/Components/album/MyAlbumDetail";
+import MyAlbumDetail from "@/components/album/MyAlbumDetail";
 import { GALLERY_BASE_URL } from "@/config";
 import { cookies } from "next/headers";
 

@@ -1,5 +1,5 @@
-import ProfileComponent from "@/Components/auth/ProfileComponent";
-import ProtectedRoutes from "@/Components/auth/ProtectedRoutes";
+import ProfileComponent from "@/components/auth/ProfileComponent";
+import ProtectedRoutes from "@/components/auth/ProtectedRoutes";
 
 export default function Page() {
 

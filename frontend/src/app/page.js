@@ -1,5 +1,5 @@
-import CategoryBox from "@/Components/gallery/CategoryBox";
-import GalleryGrid from "@/Components/gallery/GalleryGrid";
+import CategoryBox from "@/components/gallery/CategoryBox";
+import GalleryGrid from "@/components/gallery/GalleryGrid";
 import { GALLERY_BASE_URL } from "@/config";
 import { mate } from "@/fonts";
 import { cookies } from "next/headers";

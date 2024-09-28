@@ -1,4 +1,4 @@
-import GalleryGrid from "@/Components/gallery/GalleryGrid";
+import GalleryGrid from "@/components/gallery/GalleryGrid";
 
 export const metadata = {
     title : "Category | PhotoPulse",

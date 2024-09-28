@@ -1,4 +1,4 @@
-import ViewAlbum from "@/Components/album/ViewAlbum";
+import ViewAlbum from "@/components/album/ViewAlbum";
 import { GALLERY_BASE_URL } from "@/config";
 import { cookies } from "next/headers";
 

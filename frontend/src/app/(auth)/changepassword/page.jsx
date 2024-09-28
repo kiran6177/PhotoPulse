@@ -1,5 +1,5 @@
-import Password from "@/Components/auth/Password";
-import ProtectedRoutes from "@/Components/auth/ProtectedRoutes";
+import Password from "@/components/auth/Password";
+import ProtectedRoutes from "@/components/auth/ProtectedRoutes";
 
 export default function Page() {
   return (
