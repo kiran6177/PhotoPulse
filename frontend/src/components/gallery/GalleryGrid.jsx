@@ -37,7 +37,7 @@ function GalleryGrid({api,id}) {
     >
       <h2 className="text-white tracking-wider text-xl  md:text-2xl mb-10">{data?.details?.name}</h2>
 
-      {imagesArr && imagesArr.length > 0 ? (
+      {imagesArr && imagesArr.length > 0 && (
         <InfiniteScroll
           dataLength={imagesArr?.length}
           scrollThreshold={"750px"}
@@ -68,10 +68,7 @@ function GalleryGrid({api,id}) {
             );
           })}
         </InfiniteScroll>
-      ) :
-      (
-        <div className="text-white tracking-widest">NO IMAGES FOUND.</div>
-      )
+      ) 
     }
     </div>
   );
