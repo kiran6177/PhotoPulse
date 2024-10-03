@@ -12,8 +12,8 @@ function ViewAlbum({albumData}) {
     },[albumData])
 
   return (
-<div className="bg-[#432b487e] p-6 rounded-md flex justify-between">
-        <div className="w-[70%]">
+<div className="bg-[#432b487e] p-6 rounded-md flex flex-col md:flex-row justify-between">
+        <div className="md:w-[70%]">
           <div
             className={`cursor-pointer relative mb-3 overflow-hidden rounded-md group flex justify-center bg-[#000000bb]  aspect-video`}
           >
@@ -49,7 +49,7 @@ function ViewAlbum({albumData}) {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br rounded-md from-[#000000] via-[#000000] to-[#280069] w-[27%] p-8 flex flex-col items-center gap-5 text-white">
+        <div className="bg-gradient-to-br rounded-md from-[#000000] via-[#000000] to-[#280069] md:w-[27%] p-8 flex flex-col  items-center gap-5 text-white">
         <div
             className={`cursor-pointer relative mb-3 overflow-hidden rounded-full group flex justify-center bg-[#000000bb] aspect-square w-[60%]  border-2`}
           >
@@ -63,8 +63,8 @@ function ViewAlbum({albumData}) {
               />
             )}
           </div>
-          <p className="text-2xl tracking-wider">{albumData?.title}</p>
-          <p className="text-sm">
+          <p className="text-xl md:text-2xl tracking-wider text-center">{albumData?.title}</p>
+          <p className="text-xs md:text-sm  text-center">
             <span className="bg-gradient-to-r from-[#c14ac3] via-[#5010a2] to-[#2003b0] bg-clip-text text-transparent tracking-wider">
               Category :{" "}
             </span>
@@ -72,7 +72,7 @@ function ViewAlbum({albumData}) {
               {albumData?.category?.name}
             </span>
           </p>
-          <p className="text-sm">
+          <p className="text-xs md:text-sm  text-center">
             <span className="bg-gradient-to-r from-[#c14ac3] via-[#5010a2] to-[#2003b0] bg-clip-text text-transparent tracking-wider">
               Uploaded By :{" "}
             </span>

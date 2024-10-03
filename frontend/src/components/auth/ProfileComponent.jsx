@@ -29,12 +29,12 @@ function ProfileComponent() {
 
   return (
     <>
-      <div className="self-start px-8 pt-[2rem] flex justify-between w-full">
+      <div className="self-start px-8 pt-[2rem] flex flex-col sm:flex-row gap-4 md:gap-0 justify-between w-full">
       <div className="flex gap-7  ">
         <h1 onClick={()=>setView("PROFILE")} className={view === "PROFILE" ? " cursor-pointer bg-gradient-to-r from-[#c14ac3] via-[#5010a2] to-[#2003b0] bg-clip-text text-transparent tracking-widest" :"cursor-pointer text-white tracking-widest "}>PROFILE</h1>
         <h1 onClick={()=>setView("GALLERY")} className={view === "GALLERY"? " cursor-pointer bg-gradient-to-r from-[#c14ac3] via-[#5010a2] to-[#2003b0] bg-clip-text text-transparent tracking-widest" :"cursor-pointer text-white tracking-widest "}>GALLERY</h1>
       </div>
-      <div className="w-[16%]">
+      <div className="  sm:w-[16%]">
         <FullButton title={"LOGOUT"} type={"button"} styles={"text-white"} clickHandler={handleLogout} />
       </div>
       </div>

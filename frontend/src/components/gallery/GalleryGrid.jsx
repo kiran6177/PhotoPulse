@@ -68,10 +68,11 @@ function GalleryGrid({api,id}) {
             );
           })}
         </InfiniteScroll>
-      ) : 
+      ) :
       (
         <div className="text-white tracking-widest">NO IMAGES FOUND.</div>
-      )}
+      )
+    }
     </div>
   );
 }
